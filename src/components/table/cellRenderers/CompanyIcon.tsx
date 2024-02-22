@@ -1,3 +1,4 @@
+import { copilotPrimaryColor } from '@/config';
 import { Box } from '@mui/material';
 
 interface CompanyIconProps {
@@ -6,7 +7,7 @@ interface CompanyIconProps {
   fallbackColor?: string;
 }
 
-export const CompanyIcon = ({ label, iconImageUrl, fallbackColor }: CompanyIconProps) => {
+const CompanyIcon = ({ label, iconImageUrl, fallbackColor }: CompanyIconProps) => {
   return iconImageUrl ? (
     <Box component="img" src={iconImageUrl} alt="avatar" sx={{ width: '20px', height: '20px' }} />
   ) : (
@@ -15,8 +16,8 @@ export const CompanyIcon = ({ label, iconImageUrl, fallbackColor }: CompanyIconP
         width: '20px',
         height: '20px',
         borderRadius: '100%',
-        // #09AA6C is the primary color for copilot. Use as fallback when fallbackColor is not provided
-        backgroundColor: fallbackColor || '#09AA6C',
+        // Use the primary color for copilot as a final fallback when fallbackColor is not provided
+        backgroundColor: fallbackColor || copilotPrimaryColor,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -28,3 +29,5 @@ export const CompanyIcon = ({ label, iconImageUrl, fallbackColor }: CompanyIconP
     </Box>
   );
 };
+
+export default CompanyIcon;

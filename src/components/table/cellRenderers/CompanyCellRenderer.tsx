@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import { CompanyIcon } from './CompanyIcon';
+import CompanyIcon from '@/components/table/cellRenderers/CompanyIcon';
 
 export const CompanyCellRenderer = ({
   value,
