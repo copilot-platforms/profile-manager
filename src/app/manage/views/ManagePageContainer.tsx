@@ -74,7 +74,6 @@ export const ManagePageContainer = ({
         if (Array.isArray(obj[key])) {
           result[key] = obj[key].map((item: any) => item.key);
         } else {
-          // Jugaad because copilot API doesn't update customFields if any value is empty string
           result[key] = obj[key];
         }
       }
