@@ -1,4 +1,4 @@
-import { copilotPrimaryColor } from '@/config';
+import copilotTheme from '@/utils/copilotTheme';
 import { Box } from '@mui/material';
 
 interface CompanyIconProps {
@@ -17,7 +17,7 @@ const CompanyIcon = ({ label, iconImageUrl, fallbackColor }: CompanyIconProps) =
         height: '20px',
         borderRadius: '100%',
         // Use the primary color for copilot as a final fallback when fallbackColor is not provided
-        backgroundColor: fallbackColor || copilotPrimaryColor,
+        backgroundColor: fallbackColor || copilotTheme.colors.primary,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
