@@ -5,7 +5,7 @@ import { CopilotAPI } from '@/utils/copilotApiUtils';
 import { z } from 'zod';
 
 // Fetch workspace from API
-export async function getWorkspaceInfo({ token }: APIProps): Promise<WorkspaceResponse> {
+export async function getWorkspaceInfo({ token }: { token: string }): Promise<WorkspaceResponse> {
   const copilotClient = new CopilotAPI(z.string().parse(token));
   return await copilotClient.getWorkspace();
 }
