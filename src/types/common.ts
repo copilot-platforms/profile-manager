@@ -96,6 +96,6 @@ export const ClientRequestSchema = z.object({
   givenName: z.string().optional(),
   familyName: z.string().optional(),
   companyId: z.string().uuid().optional(),
-  customFields: z.record(z.union([z.string(), z.array(z.string())])).nullish(),
+  customFields: z.record(z.union([z.string(), z.array(z.string())])).nullable(),
 });
 export type ClientRequest = z.infer<typeof ClientRequestSchema>;
