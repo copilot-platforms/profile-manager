@@ -18,9 +18,9 @@ export type MeResponse = z.infer<typeof MeResponseSchema>;
 
 // Response schema for `/workspace` endpoint
 export const WorkspaceResponseSchema = z.object({
+  id: z.string(),
   isCompaniesEnabled: z.boolean().optional(),
   // For future use
-  // id: z.string(),
   // industry: z.string().optional(),
   // isClientDirectSignUpEnabled: z.boolean().optional(),
   // logOutUrl: z.string().optional(),
