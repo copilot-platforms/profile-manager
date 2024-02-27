@@ -4,6 +4,7 @@ import { apiUrl } from '@/config';
 import { CustomFieldAccessResponse } from '@/types/customFieldAccess';
 import { ProfileLinks } from '@/types/settings';
 import Button from '@/components/atoms/Button';
+import { getWorkspaceInfo } from '../../../services/workspace';
 
 export const revalidate = 0;
 
@@ -47,10 +48,12 @@ async function getClient(clientId: string, token: string) {
 }
 
 export default async function ManagePage({ searchParams }: { searchParams: { token: string; portalId: string } }) {
-  const { token, portalId } = searchParams;
+  const { token } = searchParams;
 
+  const { id: portalId } = await getWorkspaceInfo({ token });
   const settings = await getSettings({ token, portalId }).then((s) => s?.profileLinks || []);
   const customFieldAccess = await getCustomFieldAccess({ token, portalId });
+
   // static for now, will be dynamic later after some API decisions are made
   const clientId = 'a583a0d0-de70-4d14-8bb1-0aacf7424e2c';
   const companyId = '52eb75a9-2790-4e37-aa7a-c13f7bc3aa91';

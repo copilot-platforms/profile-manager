@@ -63,12 +63,13 @@ async function getSettings({ token, portalId }: { token: string; portalId: strin
 }
 
 export default async function Home({ searchParams }: { searchParams: { token: string; portalId: string } }) {
-  const { token, portalId } = searchParams;
+  const { token } = searchParams;
+  const workspace = await getWorkspaceInfo({ token });
+  const { id: portalId } = workspace;
 
   const clientProfileUpdates = await getClientProfileUpdates({ token, portalId });
   const customFieldAccess = await getCustomFieldAccess({ token, portalId });
   const settings = await getSettings({ token, portalId });
-  const workspace = await getWorkspaceInfo({ token, portalId });
 
   return (
     <ContextUpdate
