@@ -16,6 +16,7 @@ import {
   WorkspaceResponse,
   WorkspaceResponseSchema,
   Token,
+  TokenSchema,
 } from '@/types/common';
 import { copilotAPIKey } from '@/config';
 
@@ -37,6 +38,10 @@ export class CopilotAPI {
 
   async getWorkspace(): Promise<WorkspaceResponse> {
     return WorkspaceResponseSchema.parse(await this.copilot.getWorkspaceInfo());
+  }
+
+  async getTokenPayload(): Promise<Token> {
+    return TokenSchema.parse(await this.copilot.getTokenPayload?.());
   }
 
   async getClient(clientId: string): Promise<ClientResponse> {

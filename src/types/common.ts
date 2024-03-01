@@ -1,11 +1,25 @@
 import { z } from 'zod';
 
-export interface Token {
-  clientId?: string;
-  companyId?: string;
-  internalUserId?: string;
-  workspaceId: string;
-}
+export const TokenSchema = z.object({
+  clientId: z.string().nullish(),
+  companyId: z.string().nullish(),
+  internalUserId: z.string().nullish(),
+  workspaceId: z.string().nullish(),
+});
+export type Token = z.infer<typeof TokenSchema>;
+
+export const IUTokenSchema = z.object({
+  internalUserId: z.string(),
+  workspaceId: z.string(),
+});
+export type IUToken = z.infer<typeof IUTokenSchema>;
+
+export const ClientTokenSchema = z.object({
+  clientId: z.string(),
+  companyId: z.string(),
+  workspaceId: z.string().nullish(),
+});
+export type ClientToken = z.infer<typeof ClientTokenSchema>;
 
 export const MeResponseSchema = z.object({
   id: z.string(),

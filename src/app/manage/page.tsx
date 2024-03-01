@@ -3,9 +3,10 @@ import { ManagePageContainer } from './views/ManagePageContainer';
 import { apiUrl } from '@/config';
 import { CustomFieldAccessResponse } from '@/types/customFieldAccess';
 import { ProfileLinks } from '@/types/settings';
-import { getWorkspaceInfo } from '../../../services/workspace';
+import { getClientTokenPayload, getWorkspaceInfo } from '../../../services/copilot';
 import { PortalRoutes } from '@/types/copilotPortal';
 import RedirectButton from '@/components/atoms/RedirectButton';
+import { z } from 'zod';
 
 export const revalidate = 0;
 
@@ -49,17 +50,13 @@ async function getClient(clientId: string, token: string) {
 }
 
 export default async function ManagePage({ searchParams }: { searchParams: { token: string; portalId: string } }) {
-  const { token } = searchParams;
+  const token = z.string().parse(searchParams.token);
 
   const { id: portalId } = await getWorkspaceInfo({ token });
   const settings = await getSettings({ token, portalId }).then((s) => s?.profileLinks || []);
   const customFieldAccess = await getCustomFieldAccess({ token, portalId });
 
-  // static for now, will be dynamic later after some API decisions are made
-  const clientId = 'a583a0d0-de70-4d14-8bb1-0aacf7424e2c';
-  const companyId = '52eb75a9-2790-4e37-aa7a-c13f7bc3aa91';
-  // const clientId = '2b37da9b-73b9-4c28-b7ac-144cf39cb13b';
-  // const companyId = 'b5b3883c-f3e7-40e2-98e8-4f4b195ba98e';
+  const { clientId, companyId } = await getClientTokenPayload({ token });
   const client = await getClient(clientId, token);
 
   return (

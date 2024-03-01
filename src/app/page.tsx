@@ -6,7 +6,7 @@ import { apiUrl } from '@/config';
 import { ParsedClientProfileUpdatesResponse } from '@/types/clientProfileUpdates';
 import { CustomFieldAccessResponse } from '@/types/customFieldAccess';
 import { ContextUpdate } from '@/hoc/ContextUpdate';
-import { getWorkspaceInfo } from '../../services/workspace';
+import { getWorkspaceInfo } from '../../services/copilot';
 
 export const revalidate = 0;
 
