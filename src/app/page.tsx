@@ -6,7 +6,8 @@ import { apiUrl } from '@/config';
 import { ParsedClientProfileUpdatesResponse } from '@/types/clientProfileUpdates';
 import { CustomFieldAccessResponse } from '@/types/customFieldAccess';
 import { ContextUpdate } from '@/hoc/ContextUpdate';
-import { getWorkspaceInfo } from '../../services/copilot';
+import { CopilotAPI } from '@/utils/copilotApiUtils';
+import { z } from 'zod';
 
 export const revalidate = 0;
 
@@ -63,8 +64,9 @@ async function getSettings({ token, portalId }: { token: string; portalId: strin
 }
 
 export default async function Home({ searchParams }: { searchParams: { token: string; portalId: string } }) {
-  const { token } = searchParams;
-  const workspace = await getWorkspaceInfo({ token });
+  const token = z.string().parse(searchParams);
+  const copilotClient = new CopilotAPI(token);
+  const workspace = await copilotClient.getWorkspace();
   const { id: portalId } = workspace;
 
   const clientProfileUpdates = await getClientProfileUpdates({ token, portalId });

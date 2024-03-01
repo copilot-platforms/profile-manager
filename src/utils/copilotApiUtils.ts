@@ -17,6 +17,10 @@ import {
   WorkspaceResponseSchema,
   Token,
   TokenSchema,
+  ClientToken,
+  ClientTokenSchema,
+  IUTokenSchema,
+  IUToken,
 } from '@/types/common';
 import { copilotAPIKey } from '@/config';
 
@@ -40,8 +44,16 @@ export class CopilotAPI {
     return WorkspaceResponseSchema.parse(await this.copilot.getWorkspaceInfo());
   }
 
-  async getTokenPayload(): Promise<Token> {
+  private async getTokenPayload(): Promise<Token> {
     return TokenSchema.parse(await this.copilot.getTokenPayload?.());
+  }
+
+  async getClientTokenPayload(): Promise<ClientToken> {
+    return ClientTokenSchema.parse(await this.getTokenPayload());
+  }
+
+  async getIUTokenPayload(): Promise<IUToken> {
+    return IUTokenSchema.parse(await this.getTokenPayload());
   }
 
   async getClient(clientId: string): Promise<ClientResponse> {

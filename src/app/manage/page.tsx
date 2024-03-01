@@ -3,10 +3,10 @@ import { ManagePageContainer } from './views/ManagePageContainer';
 import { apiUrl } from '@/config';
 import { CustomFieldAccessResponse } from '@/types/customFieldAccess';
 import { ProfileLinks } from '@/types/settings';
-import { getClientTokenPayload, getWorkspaceInfo } from '../../../services/copilot';
 import { PortalRoutes } from '@/types/copilotPortal';
 import RedirectButton from '@/components/atoms/RedirectButton';
 import { z } from 'zod';
+import { CopilotAPI } from '@/utils/copilotApiUtils';
 
 export const revalidate = 0;
 
@@ -52,11 +52,13 @@ async function getClient(clientId: string, token: string) {
 export default async function ManagePage({ searchParams }: { searchParams: { token: string; portalId: string } }) {
   const token = z.string().parse(searchParams.token);
 
-  const { id: portalId } = await getWorkspaceInfo({ token });
+  const copilotClient = new CopilotAPI(token);
+
+  const { id: portalId } = await copilotClient.getWorkspace();
+  const { clientId, companyId } = await copilotClient.getClientTokenPayload();
   const settings = await getSettings({ token, portalId }).then((s) => s?.profileLinks || []);
   const customFieldAccess = await getCustomFieldAccess({ token, portalId });
 
-  const { clientId, companyId } = await getClientTokenPayload({ token });
   const client = await getClient(clientId, token);
 
   return (
