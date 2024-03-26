@@ -61,7 +61,7 @@ export const Sidebar = () => {
           borderBottom: `1px solid ${theme.color.borders.border}`,
         })}
       >
-        <Typography variant="md">Links</Typography>
+        <Typography variant="md">Show links to other settings</Typography>
 
         <Stack direction="row" justifyContent="space-between" p="12px 0px 6px 0px">
           <Typography variant="bodyMd">General profile settings</Typography>
