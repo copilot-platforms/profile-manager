@@ -29,7 +29,7 @@ export const ManagePageContainer = ({
 
   const [allowedCustomField, setAllowedCustomField] = useState<any>(null);
 
-  const [customFieldsValue, setCustomFieldsValue] = useState<any>(client.customFields);
+  const [customFieldsValue, setCustomFieldsValue] = useState<any>(client.customFields || {});
 
   const [profileData, setProfileData] = useState<any>({});
 
