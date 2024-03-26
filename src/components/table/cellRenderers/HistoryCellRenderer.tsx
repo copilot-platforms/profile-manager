@@ -184,7 +184,6 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
 
   return (
     <Box position="relative">
-      {console.log(data.value, showDot)}
       {showDot && (
         <Typography
           aria-describedby={id}
