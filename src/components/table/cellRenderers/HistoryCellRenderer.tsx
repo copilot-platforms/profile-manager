@@ -63,8 +63,9 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
   const multiSelectAnchorOpen = Boolean(multiSelectAnchor);
   const multiSelectAnchorId = multiSelectAnchorOpen ? 'multiselect-popper' : undefined;
 
+  // There are certain edge cases like with Phone Numbers where null is returned
   if (data.value === null) {
-    return null;
+    data.value = '';
   }
 
   if (data.type === 'multiSelect') {
@@ -147,33 +148,34 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
               columnGap: '10px',
             })}
           >
-            {data?.value?.map((el: any, key: number) => {
-              if (key === 0) return null;
-              return (
-                <Stack
-                  key={key}
-                  direction="row"
-                  alignItems="center"
-                  sx={{
-                    padding: '4px 8px',
-                    borderColor: updateColor(el.color, 0.3),
-                    border: '2px solid',
-                    backgroundColor: updateColor(el.color, 0.1),
-                    color: el.color,
-                    fontWeight: '600',
-                    borderRadius: '35px',
-                    width: 'fit-content',
-                    minWidth: '40px',
-                  }}
-                >
-                  <FiberManualRecord fontSize="small" />
+            {data?.value &&
+              data?.value?.map((el: any, key: number) => {
+                if (key === 0) return null;
+                return (
+                  <Stack
+                    key={key}
+                    direction="row"
+                    alignItems="center"
+                    sx={{
+                      padding: '4px 8px',
+                      borderColor: updateColor(el.color, 0.3),
+                      border: '2px solid',
+                      backgroundColor: updateColor(el.color, 0.1),
+                      color: el.color,
+                      fontWeight: '600',
+                      borderRadius: '35px',
+                      width: 'fit-content',
+                      minWidth: '40px',
+                    }}
+                  >
+                    <FiberManualRecord fontSize="small" />
 
-                  <Typography variant="bodySm" fontWeight={500}>
-                    {el.label}
-                  </Typography>
-                </Stack>
-              );
-            })}
+                    <Typography variant="bodySm" fontWeight={500}>
+                      {el.label}
+                    </Typography>
+                  </Stack>
+                );
+              })}
           </Stack>
         </Popper>
       </Box>
