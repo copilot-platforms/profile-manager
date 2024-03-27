@@ -22,7 +22,7 @@ export const ContextUpdate = ({ children, access, settings, token, portalId, wor
     `api/client-profile-updates?token=${token}&portalId=${portalId}`,
     fetcher,
     {
-      refreshInterval: 5000,
+      refreshInterval: 10000,
     },
   );
 

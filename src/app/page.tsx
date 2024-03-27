@@ -58,8 +58,10 @@ export default async function Home({ searchParams }: { searchParams: { token: st
   const workspace = await copilotClient.getWorkspace();
   const { id: portalId } = workspace;
 
-  const customFieldAccess = await getCustomFieldAccess({ token, portalId });
-  const settings = await getSettings({ token, portalId });
+  const [customFieldAccess, settings] = await Promise.all([
+    getCustomFieldAccess({ token, portalId }),
+    getSettings({ token, portalId }),
+  ]);
 
   return (
     <ContextUpdate
