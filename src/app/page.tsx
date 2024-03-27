@@ -12,24 +12,6 @@ import InvalidToken from '@/components/atoms/InvalidToken';
 
 export const revalidate = 0;
 
-async function getClientProfileUpdates({
-  token,
-  portalId,
-}: {
-  token: string;
-  portalId: string;
-}): Promise<ParsedClientProfileUpdatesResponse[]> {
-  const res = await fetch(`${apiUrl}/api/client-profile-updates?token=${token}&portalId=${portalId}`);
-
-  if (!res.ok) {
-    throw new Error('Something went wrong in getClientProfileUpdates');
-  }
-
-  const data = await res.json();
-
-  return data;
-}
-
 async function getCustomFieldAccess({
   token,
   portalId,
@@ -76,13 +58,11 @@ export default async function Home({ searchParams }: { searchParams: { token: st
   const workspace = await copilotClient.getWorkspace();
   const { id: portalId } = workspace;
 
-  const clientProfileUpdates = await getClientProfileUpdates({ token, portalId });
   const customFieldAccess = await getCustomFieldAccess({ token, portalId });
   const settings = await getSettings({ token, portalId });
 
   return (
     <ContextUpdate
-      clientProfileUpdates={clientProfileUpdates}
       settings={settings?.profileLinks || []}
       access={customFieldAccess}
       token={token}

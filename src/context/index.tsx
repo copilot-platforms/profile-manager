@@ -7,6 +7,7 @@ export interface IAppState {
   showSidebar: boolean;
   searchKeyword: string;
   clientProfileUpdates: any[];
+  isClientProfileUpdatesLoading: boolean;
   customFieldAccess: any; //readonly
   mutableCustomFieldAccess: any;
   settings: any; //readonly
@@ -20,6 +21,7 @@ export interface IAppContext {
   showSidebar: boolean;
   searchKeyword: string;
   clientProfileUpdates: any[];
+  isClientProfileUpdatesLoading: boolean;
   customFieldAccess: any; //readonly
   mutableCustomFieldAccess: any;
   settings: any; //readonly
@@ -41,6 +43,7 @@ export const AppContextProvider: FC<IAppCoreProvider> = ({ children }) => {
     showSidebar: false,
     searchKeyword: '',
     clientProfileUpdates: [],
+    isClientProfileUpdatesLoading: true,
     customFieldAccess: [],
     mutableCustomFieldAccess: [],
     settings: [],
@@ -56,6 +59,7 @@ export const AppContextProvider: FC<IAppCoreProvider> = ({ children }) => {
         showSidebar: state.showSidebar,
         searchKeyword: state.searchKeyword,
         clientProfileUpdates: state.clientProfileUpdates,
+        isClientProfileUpdatesLoading: state.isClientProfileUpdatesLoading,
         customFieldAccess: state.customFieldAccess,
         mutableCustomFieldAccess: state.mutableCustomFieldAccess,
         settings: state.settings,
