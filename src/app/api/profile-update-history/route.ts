@@ -43,14 +43,18 @@ export async function GET(request: NextRequest) {
       return {
         type: selectedCustomField.type,
         value: options.length > 0 ? options : value,
+        wasUpdatedByIU: update.wasUpdatedByIU,
       };
     });
     // If update history contains fewer than 4 items we assume the oldest value to start from empty
     if (parsedUpdateHistory.length < 4) {
-      parsedUpdateHistory.push({
-        type: 'text',
-        value: 'Empty',
-      });
+      if (!parsedUpdateHistory[parsedUpdateHistory.length - 1]?.wasUpdatedByIU) {
+        parsedUpdateHistory.push({
+          type: 'text',
+          value: 'Empty',
+          wasUpdatedByIU: false,
+        });
+      }
     }
 
     return NextResponse.json(parsedUpdateHistory);

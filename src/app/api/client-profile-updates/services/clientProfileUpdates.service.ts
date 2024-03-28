@@ -56,7 +56,7 @@ export class ClientProfileUpdatesService {
 
   async getUpdateHistory(customFieldKey: string, clientId: string, lastUpdated: Date): Promise<UpdateHistory[]> {
     return this.prismaClient.$queryRaw`
-      SELECT "changedFields"
+      SELECT "changedFields", "wasUpdatedByIU"
       FROM "ClientProfileUpdates"
       WHERE "clientId" = ${clientId}::uuid
       AND "createdAt" <= ${lastUpdated}

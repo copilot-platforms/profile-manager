@@ -55,5 +55,6 @@ export type ParsedClientProfileUpdatesResponse = z.infer<typeof ParsedClientProf
 
 export const UpdateHistorySchema = z.object({
   changedFields: CustomFieldUpdatesSchema,
+  wasUpdatedByIU: z.boolean(),
 });
 export type UpdateHistory = z.infer<typeof UpdateHistorySchema>;
