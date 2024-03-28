@@ -1,14 +1,14 @@
 'use client';
 
 import { useAppState } from '@/hooks/useAppState';
-import { ParsedClientProfileUpdatesResponse } from '@/types/clientProfileUpdates';
 import { WorkspaceResponse } from '@/types/common';
 import { CustomFieldAccessResponse } from '@/types/customFieldAccess';
+import { fetcher } from '@/utils/fetcher';
 import { ReactNode, useEffect } from 'react';
+import useSWR from 'swr';
 
 interface IContextUpdate {
   children: ReactNode;
-  clientProfileUpdates: ParsedClientProfileUpdatesResponse[];
   access: CustomFieldAccessResponse;
   settings: any;
   token: string;
@@ -16,16 +16,15 @@ interface IContextUpdate {
   workspace: WorkspaceResponse;
 }
 
-export const ContextUpdate = ({
-  children,
-  clientProfileUpdates,
-  access,
-  settings,
-  token,
-  portalId,
-  workspace,
-}: IContextUpdate) => {
+export const ContextUpdate = ({ children, access, settings, token, portalId, workspace }: IContextUpdate) => {
   const appState = useAppState();
+  const { data: clientProfileUpdates, isLoading: isClientProfileUpdatesLoading } = useSWR(
+    `api/client-profile-updates?token=${token}&portalId=${portalId}`,
+    fetcher,
+    {
+      refreshInterval: 10000,
+    },
+  );
 
   useEffect(() => {
     appState?.setAppState((prev) => ({ ...prev, workspace }));
@@ -33,6 +32,10 @@ export const ContextUpdate = ({
 
   useEffect(() => {
     appState?.setAppState((prev) => ({ ...prev, clientProfileUpdates }));
+    // lag half second before setting isLoading to false so that noRows component doesn't flash No Rows Found before rendering data!
+    const timeoutId = setTimeout(() => appState?.setAppState((prev) => ({ ...prev, isClientProfileUpdatesLoading })), 500);
+
+    return () => clearTimeout(timeoutId);
   }, [clientProfileUpdates]);
 
   useEffect(() => {

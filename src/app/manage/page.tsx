@@ -62,11 +62,11 @@ export default async function ManagePage({ searchParams }: { searchParams: { tok
 
   const { id: portalId } = await copilotClient.getWorkspace();
   const { clientId, companyId } = await copilotClient.getClientTokenPayload();
-  const settings = await getSettings({ token, portalId }).then((s) => s?.profileLinks || []);
-  const customFieldAccess = await getCustomFieldAccess({ token, portalId });
-
-  const client = await getClient(clientId, token);
-
+  const [settings, customFieldAccess, client] = await Promise.all([
+    getSettings({ token, portalId }).then((s) => s?.profileLinks || []),
+    getCustomFieldAccess({ token, portalId }),
+    getClient(clientId, token),
+  ]);
   const isAccessProvided = customFieldAccess.some(
     (field) => (field as unknown as ModifiedPermissionAccessField).permission.length > 0,
   );

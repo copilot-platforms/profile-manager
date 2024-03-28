@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css'; // Core CSS
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Theme
@@ -12,9 +12,8 @@ import { getTimeAgo } from '@/utils/getTimeAgo';
 import { arraysHaveSameElements, sliceTillElement } from '@/utils/array';
 import { order } from '@/utils/orderable';
 import copilotTheme from '@/utils/copilotTheme';
-import { ClientsIcon } from '@/icons';
-import Link from 'next/link';
 import NoRowsOverlay from './NoRowsOverlay';
+import Loading from '@/app/loading';
 
 export const TableCore = () => {
   const appState = useAppState();
@@ -63,7 +62,7 @@ export const TableCore = () => {
     setRowData(appState?.clientProfileUpdates);
 
     let colDefs: any = [];
-    if (appState?.clientProfileUpdates.length && appState?.clientProfileUpdates.length) {
+    if (appState?.clientProfileUpdates?.length) {
       const col = appState?.clientProfileUpdates[0];
       delete col.id;
 
@@ -208,12 +207,14 @@ export const TableCore = () => {
       {rowData?.length ? (
         <AgGridReact
           className="on-scroll"
-          rowData={rowData}
+          rowData={rowData || []}
           columnDefs={colDefs}
           defaultColDef={defaultColDef}
           suppressMovableColumns={true}
           quickFilterText={appState?.searchKeyword}
         />
+      ) : appState?.isClientProfileUpdatesLoading ? (
+        <Loading />
       ) : (
         <NoRowsOverlay />
       )}
