@@ -90,8 +90,7 @@ export async function GET(request: NextRequest) {
   try {
     const copilotClient = new CopilotAPI(z.string().parse(token));
 
-    const [currentUser, clients, companies, portalCustomFields] = await Promise.all([
-      copilotClient.me(),
+    const [clients, companies, portalCustomFields] = await Promise.all([
       copilotClient.getClients(),
       copilotClient.getCompanies(),
       copilotClient.getCustomFields(),
