@@ -17,15 +17,9 @@ export function handleError(error: unknown) {
     status: 500,
   };
   if (matchesCopilotApiError(error)) {
-    const castedErr = error as {
-      status: number;
-      body: {
-        message: string;
-      };
-    };
     apiError = {
-      message: castedErr.body.message,
-      status: castedErr.status,
+      message: error.body.message,
+      status: error.status,
     };
   }
   return respondError(apiError.message, apiError.status);
