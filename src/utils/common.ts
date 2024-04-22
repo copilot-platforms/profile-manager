@@ -1,13 +1,5 @@
 import { NextResponse } from 'next/server';
-import { CopilotAPI } from './copilotApiUtils';
-import { MeResponse } from '@/types/common';
-import { ApiError } from 'copilot-node-sdk/codegen/api';
-
-export async function getCurrentUser(apiToken: string): Promise<MeResponse> {
-  const copilotClient = new CopilotAPI(apiToken);
-
-  return await copilotClient.me();
-}
+import { matchesCopilotApiError } from '@/exceptions/copilot';
 
 export function respondError(message: string, status: number = 500) {
   return NextResponse.json(
@@ -24,7 +16,7 @@ export function handleError(error: unknown) {
     message: 'Something went wrong',
     status: 500,
   };
-  if (error instanceof ApiError) {
+  if (matchesCopilotApiError(error)) {
     apiError = {
       message: error.body.message,
       status: error.status,
