@@ -6,8 +6,10 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  // Vercel won't let us change the POSTGRES_* config so update it with a connection_limit key using a custom env var like
+  // POSTGRES_PRISMA_URL_HIGHER_CONNECTION_LIMIT="$POSTGRES_PRISMA_URL&connection_limit=20"
+  url       = env("POSTGRES_PRISMA_URL_HIGHER_CONNECTION_LIMIT")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
@@ -17,30 +19,30 @@ enum Permission {
 }
 
 model CustomFieldAccess {
-  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  customFieldId   String       @db.Uuid
-  portalId        String
-  permissions     Permission[]
-  createdAt       DateTime     @default(now()) @db.Timestamptz()
-  updatedAt       DateTime     @updatedAt @ignore @db.Timestamptz()
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customFieldId String       @db.Uuid
+  portalId      String
+  permissions   Permission[]
+  createdAt     DateTime     @default(now()) @db.Timestamptz()
+  updatedAt     DateTime     @updatedAt @ignore @db.Timestamptz()
 }
 
 model ClientProfileUpdates {
-  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  clientId        String       @db.Uuid
-  companyId       String       @db.Uuid
-  portalId        String
-  customFields    Json         @db.JsonB
-  changedFields   Json         @db.JsonB
-  createdAt       DateTime     @default(now()) @db.Timestamptz()
-  wasUpdatedByIU  Boolean      @default(false)
-  updatedAt       DateTime     @updatedAt @ignore @db.Timestamptz()
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clientId       String   @db.Uuid
+  companyId      String   @db.Uuid
+  portalId       String
+  customFields   Json     @db.JsonB
+  changedFields  Json     @db.JsonB
+  createdAt      DateTime @default(now()) @db.Timestamptz()
+  wasUpdatedByIU Boolean  @default(false)
+  updatedAt      DateTime @updatedAt @ignore @db.Timestamptz()
 }
 
 model Setting {
-  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  portalId        String
-  data            Json         @db.JsonB
-  createdAt       DateTime     @default(now()) @db.Timestamptz()
-  updatedAt       DateTime     @updatedAt @ignore @db.Timestamptz()
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  portalId  String
+  data      Json     @db.JsonB
+  createdAt DateTime @default(now()) @db.Timestamptz()
+  updatedAt DateTime @updatedAt @ignore @db.Timestamptz()
 }
