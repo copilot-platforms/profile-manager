@@ -101,7 +101,7 @@ export const ManagePageContainer = ({
 
     const updatedClientData = await client.json();
 
-    setCustomFieldsValue(updatedClientData.data.customFields || {});
+    setCustomFieldsValue(updatedClientData.data?.customFields || {});
 
     setCustomFieldAccess(data);
 

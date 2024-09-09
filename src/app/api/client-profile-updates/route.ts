@@ -40,9 +40,9 @@ export async function POST(request: NextRequest) {
     // First, check if the copilot's custom fields and our recent history are in sync
     for (const key of Object.keys(changedFields)) {
       const updateHistory = await new ClientProfileUpdatesService().getUpdateHistory(key, client.id, new Date());
-      console.log(`Processing updateHistory: ${updateHistory}`);
+      console.log('Processing updateHistory:', updateHistory);
       const lastHistory = updateHistory?.[0]?.changedFields?.[key];
-      console.log(`Last history: ${lastHistory}`);
+      console.log('Last history:', lastHistory);
 
       const areHistoriesEmpty =
         // Case where both have empty values. Make sure to strict check so we don't consider 0 input as empty history
