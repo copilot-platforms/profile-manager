@@ -44,7 +44,7 @@ export const ManagePageContainer = ({
           return [];
         }
         const customFieldObject = allowedFields.find((el: any) => el.key === key);
-        const selectedValues = customFieldObject.options.filter((el: any) => values.includes(el.key));
+        const selectedValues = customFieldObject?.options.filter((el: any) => values.includes(el.key)) || [];
 
         return selectedValues;
       };
@@ -101,7 +101,7 @@ export const ManagePageContainer = ({
 
     const updatedClientData = await client.json();
 
-    setCustomFieldsValue(updatedClientData.data.customFields);
+    setCustomFieldsValue(updatedClientData.data.customFields || {});
 
     setCustomFieldAccess(data);
 
@@ -132,7 +132,7 @@ export const ManagePageContainer = ({
                   <Typography variant="md">{field.name}</Typography>
                   <ToolTipDecider show={!field.permission.includes('EDIT')}>
                     <StyledTextInput
-                      value={profileData && profileData[field.key]}
+                      value={profileData?.[field.key] || ''}
                       variant="outlined"
                       padding="8px 12px"
                       disabled={!field.permission.includes('EDIT')}
@@ -158,7 +158,7 @@ export const ManagePageContainer = ({
                         key={key}
                         data={field.options}
                         nameField={(item) => item.label}
-                        value={profileData && profileData[field.key]}
+                        value={profileData?.[field.key]}
                         getSelectedValue={(value) => {
                           setProfileData((prev: any) => {
                             return { ...prev, [field.key]: value };
