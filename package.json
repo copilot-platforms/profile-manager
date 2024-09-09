@@ -23,7 +23,7 @@
     "@mui/icons-material": "^5.14.5",
     "@mui/material": "^5.15.4",
     "@prisma/client": "^5.7.1",
-    "@sentry/nextjs": "^7.105.0",
+    "@sentry/nextjs": "^8",
     "@vercel/postgres": "^0.5.1",
     "ag-grid-react": "^31.0.2",
     "copilot-node-sdk": "^2.0.0",
