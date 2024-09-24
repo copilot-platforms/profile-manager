@@ -109,9 +109,11 @@ export async function GET(request: NextRequest) {
       const client = clientLookup[update.clientId];
       const company = companyLookup.get(update.companyId);
 
-      let parsedClientProfileUpdate: ParsedClientProfileUpdatesResponse = {
+      let parsedClientProfileUpdate: any = {
         id: update?.id,
-        client: getClientDetails(client),
+        // client: getClientDetails(client),
+        // company: company ? getCompanyDetails(company) : undefined,
+        client: client ? getClientDetails(client) : undefined,
         company: company ? getCompanyDetails(company) : undefined,
         lastUpdated: update.createdAt,
       };
