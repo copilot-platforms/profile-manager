@@ -110,8 +110,8 @@ export async function GET(request: NextRequest) {
       const company = companyLookup.get(update.companyId);
 
       let parsedClientProfileUpdate: ParsedClientProfileUpdatesResponse = {
-        id: update.id, //update this
-        client: getClientDetails(client),
+        id: update?.id,
+        client: client ? getClientDetails(client) : undefined,
         company: company ? getCompanyDetails(company) : undefined,
         lastUpdated: update.createdAt,
       };
@@ -141,10 +141,10 @@ export async function GET(request: NextRequest) {
 
 function getClientDetails(client: ClientResponse) {
   return {
-    id: client.id,
-    name: `${client.givenName} ${client.familyName}`,
-    email: client.email,
-    avatarImageUrl: client.avatarImageUrl,
+    id: client?.id,
+    name: `${client?.givenName} ${client?.familyName}`,
+    email: client?.email,
+    avatarImageUrl: client?.avatarImageUrl,
   };
 }
 
