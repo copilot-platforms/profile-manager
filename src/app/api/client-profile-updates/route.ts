@@ -101,17 +101,18 @@ export async function GET(request: NextRequest) {
     ]);
     //todo:: filter companyIds based on currentUser restrictions
     const clientProfileUpdates = await new ClientProfileUpdatesService().findMany(portalId, []);
-    console.log('clientttt', clientProfileUpdates);
 
     const clientLookup = createLookup(clients.data, 'id');
     const companyLookup = createMapLookup(companies.data, 'id');
+    console.log('client lookup', clientLookup);
+    console.log('company lookup', companyLookup);
 
     const parsedClientProfileUpdates: ParsedClientProfileUpdatesResponse[] = clientProfileUpdates.map((update) => {
       const client = clientLookup[update.clientId];
       const company = companyLookup.get(update.companyId);
 
       let parsedClientProfileUpdate: ParsedClientProfileUpdatesResponse = {
-        id: update.id,
+        id: update?.id || `${Math.random()}`,
         client: getClientDetails(client),
         company: company ? getCompanyDetails(company) : undefined,
         lastUpdated: update.createdAt,
