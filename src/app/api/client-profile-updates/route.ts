@@ -109,11 +109,9 @@ export async function GET(request: NextRequest) {
       const client = clientLookup[update.clientId];
       const company = companyLookup.get(update.companyId);
 
-      let parsedClientProfileUpdate: any = {
-        id: update?.id,
-        // client: getClientDetails(client),
-        // company: company ? getCompanyDetails(company) : undefined,
-        client: client ? getClientDetails(client) : undefined,
+      let parsedClientProfileUpdate: ParsedClientProfileUpdatesResponse = {
+        id: update.id, //update this
+        client: getClientDetails(client),
         company: company ? getCompanyDetails(company) : undefined,
         lastUpdated: update.createdAt,
       };
@@ -143,10 +141,10 @@ export async function GET(request: NextRequest) {
 
 function getClientDetails(client: ClientResponse) {
   return {
-    id: client?.id,
-    name: `${client?.givenName} ${client?.familyName}`,
-    email: client?.email,
-    avatarImageUrl: client?.avatarImageUrl,
+    id: client.id,
+    name: `${client.givenName} ${client.familyName}`,
+    email: client.email,
+    avatarImageUrl: client.avatarImageUrl,
   };
 }
 
