@@ -110,7 +110,7 @@ export async function GET(request: NextRequest) {
       const company = companyLookup.get(update.companyId);
 
       let parsedClientProfileUpdate: ParsedClientProfileUpdatesResponse = {
-        id: update.id,
+        id: update.id, //update this
         client: getClientDetails(client),
         company: company ? getCompanyDetails(company) : undefined,
         lastUpdated: update.createdAt,
