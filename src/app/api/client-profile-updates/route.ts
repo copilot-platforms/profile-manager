@@ -104,15 +104,13 @@ export async function GET(request: NextRequest) {
 
     const clientLookup = createLookup(clients.data, 'id');
     const companyLookup = createMapLookup(companies.data, 'id');
-    console.log('client lookup', clientLookup);
-    console.log('company lookup', companyLookup);
 
     const parsedClientProfileUpdates: ParsedClientProfileUpdatesResponse[] = clientProfileUpdates.map((update) => {
       const client = clientLookup[update.clientId];
       const company = companyLookup.get(update.companyId);
 
       let parsedClientProfileUpdate: ParsedClientProfileUpdatesResponse = {
-        id: update?.id || `${Math.random()}`,
+        id: update?.id,
         client: getClientDetails(client),
         company: company ? getCompanyDetails(company) : undefined,
         lastUpdated: update.createdAt,
@@ -143,10 +141,10 @@ export async function GET(request: NextRequest) {
 
 function getClientDetails(client: ClientResponse) {
   return {
-    id: client.id,
-    name: `${client.givenName} ${client.familyName}`,
-    email: client.email,
-    avatarImageUrl: client.avatarImageUrl,
+    id: client?.id,
+    name: `${client?.givenName} ${client?.familyName}`,
+    email: client?.email,
+    avatarImageUrl: client?.avatarImageUrl,
   };
 }
 
