@@ -36,12 +36,14 @@ export type ClientProfileUpdatesResponse = z.infer<typeof ClientProfileUpdatesRe
 
 export const ParsedClientProfileUpdatesResponseSchema = z.object({
   id: z.string().uuid(),
-  client: z.object({
-    id: z.string().uuid(),
-    name: z.string(),
-    email: z.string(),
-    avatarImageUrl: z.string().nullable(),
-  }),
+  client: z
+    .object({
+      id: z.string().uuid(),
+      name: z.string(),
+      email: z.string(),
+      avatarImageUrl: z.string().nullable(),
+    })
+    .optional(),
   company: z
     .object({
       id: z.string().uuid(),
