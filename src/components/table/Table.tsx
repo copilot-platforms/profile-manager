@@ -96,9 +96,9 @@ export const TableCore = () => {
                 const client = params.data[el];
                 const company = params.data['company'];
                 return {
-                  avatarImageUrl: client.avatarImageUrl,
-                  name: client.name,
-                  email: client.email,
+                  avatarImageUrl: client?.avatarImageUrl,
+                  name: client?.name,
+                  email: client?.email,
                   fallbackColor: company?.fallbackColor || copilotTheme.colors.primary,
                 };
               },
