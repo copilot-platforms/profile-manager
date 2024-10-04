@@ -13,7 +13,7 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
 
   const data = value.row[value.key];
 
-  const clientId = value.row.client.id;
+  const clientId = value.row.client?.id;
   const lastUpdated = value.row.lastUpdated;
   const token = appState?.token;
   const key = value.row[value.key].key;
