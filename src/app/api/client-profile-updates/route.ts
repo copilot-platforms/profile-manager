@@ -132,8 +132,10 @@ export async function GET(request: NextRequest) {
 
       return parsedClientProfileUpdate;
     });
-
-    return NextResponse.json(parsedClientProfileUpdates);
+    // If any client is deleted in Copilot, we can't fetch the client data for it.
+    // Filter them out of the array to only show active client profile updates
+    const activeClientProfileUpdates = parsedClientProfileUpdates.filter((profile) => !!profile.client);
+    return NextResponse.json(activeClientProfileUpdates);
   } catch (error) {
     return handleError(error);
   }
