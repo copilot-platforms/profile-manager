@@ -1,9 +1,9 @@
 export function updateColor(rgbaColor: any, newOpacity: number) {
   // Parse the input RGBA color string
   const colorRegex = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/;
-  const match = rgbaColor.match(colorRegex);
+  const match = rgbaColor?.match(colorRegex);
 
-  if (!match) {
+  if (!rgbaColor || !match) {
     // Invalid input format, return the original color
     return rgbaColor;
   }
