@@ -3,6 +3,8 @@ import { CopilotAPI } from '@/utils/copilotApiUtils';
 import { NextResponse, NextRequest } from 'next/server';
 import { z } from 'zod';
 
+export const maxDuration = 60;
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const clientId = searchParams.get('clientId');

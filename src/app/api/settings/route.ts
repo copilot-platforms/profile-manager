@@ -3,6 +3,8 @@ import { SettingRequestSchema } from '@/types/settings';
 import { SettingService } from '@/app/api/settings/services/setting.service';
 import { respondError } from '@/utils/common';
 
+export const maxDuration = 60;
+
 export async function PUT(request: NextRequest) {
   const requestData = await request.json();
   const setting = SettingRequestSchema.safeParse(requestData);

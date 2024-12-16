@@ -5,6 +5,8 @@ import { respondError } from '@/utils/common';
 import { CopilotAPI } from '@/utils/copilotApiUtils';
 import { z } from 'zod';
 
+export const maxDuration = 60;
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const token = searchParams.get('token');
