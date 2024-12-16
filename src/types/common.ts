@@ -16,7 +16,7 @@ export type IUToken = z.infer<typeof IUTokenSchema>;
 
 export const ClientTokenSchema = z.object({
   clientId: z.string(),
-  companyId: z.string(),
+  companyId: z.string().optional(),
   workspaceId: z.string().nullish(),
 });
 export type ClientToken = z.infer<typeof ClientTokenSchema>;
@@ -57,7 +57,7 @@ export const ClientResponseSchema = z.object({
   givenName: z.string(),
   familyName: z.string(),
   email: z.string(),
-  companyId: z.string(),
+  companyId: z.string().optional(),
   status: z.string(),
   avatarImageUrl: z.string().nullable(),
   customFields: z.record(z.string(), z.union([z.string(), z.array(z.string())]).nullable()).nullish(),
