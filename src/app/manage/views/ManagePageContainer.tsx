@@ -50,7 +50,7 @@ export const ManagePageContainer = ({
       };
       allowedFields.map((field: any) => {
         profileData[field.key] =
-          field.type === 'multiSelect'
+          field?.type === 'multiSelect'
             ? [...getSelectedValuesForMultiSelect(field.key)]
             : customFieldsValue[field.key] || '';
       });
@@ -126,7 +126,7 @@ export const ManagePageContainer = ({
       >
         {allowedCustomField &&
           order(allowedCustomField).map((field: any, key: number) => {
-            if (field.type !== 'multiSelect') {
+            if (field?.type !== 'multiSelect') {
               return (
                 <InputContainer key={key}>
                   <Typography variant="md">{field.name}</Typography>
@@ -148,7 +148,7 @@ export const ManagePageContainer = ({
                 </InputContainer>
               );
             }
-            if (field.type === 'multiSelect') {
+            if (field?.type === 'multiSelect') {
               return (
                 <InputContainer key={key}>
                   <Typography variant="md">{field.name}</Typography>

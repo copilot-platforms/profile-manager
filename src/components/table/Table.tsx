@@ -154,11 +154,11 @@ export const TableCore = () => {
           {
             field: el,
             flex: 1,
-            sortable: col[el].type === 'multiSelect' ? false : true,
+            sortable: col[el] ? (col[el].type === 'multiSelect' ? false : true) : false,
             comparator: comparatorTypeII,
             getQuickFilterText: (params: any) => {
               const data = params.data[el];
-              if (data.type === 'multiSelect') {
+              if (data?.type === 'multiSelect') {
                 if (data && data.value !== null) {
                   return data.value[0]?.label;
                 }

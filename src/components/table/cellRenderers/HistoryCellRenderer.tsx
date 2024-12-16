@@ -68,7 +68,7 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
     data.value = '';
   }
 
-  if (data.type === 'multiSelect') {
+  if (data?.type === 'multiSelect') {
     return (
       <Box position="relative">
         {showDot && (
@@ -201,7 +201,7 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
         </Typography>
       )}
       <Typography variant="bodyMd" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        {data.value}
+        {data?.value}
       </Typography>
 
       <Popper id={id} open={open} anchorEl={anchorEl}>
@@ -227,7 +227,7 @@ const HistoryList = ({ updateHistory }: { updateHistory: any }) => {
       <Typography variant="sm">Update history</Typography>
       <Stack direction="column" rowGap={1.5}>
         {updateHistory.map((history: any, key: number) => {
-          if (history.type === 'multiSelect') {
+          if (history?.type === 'multiSelect') {
             return (
               <Stack key={key} direction="row" alignItems="center" columnGap={3}>
                 <Typography variant="bodyMd" fontSize={20}>
@@ -273,8 +273,8 @@ const HistoryList = ({ updateHistory }: { updateHistory: any }) => {
                 &#x2022;
               </Typography>
               <Typography variant="bodySm" key={key}>
-                {history.value.slice(0, 700)}
-                {history.value.length > 700 ? '...' : ''}
+                {history?.value.slice(0, 700)}
+                {history?.value.length > 700 ? '...' : ''}
               </Typography>
             </Stack>
           );

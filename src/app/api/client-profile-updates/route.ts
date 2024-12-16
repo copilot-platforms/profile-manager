@@ -117,6 +117,8 @@ export async function GET(request: NextRequest) {
       };
 
       portalCustomFields.data?.forEach((portalCustomField) => {
+        if (!portalCustomField) return;
+
         const value = update.customFields[portalCustomField.key] ?? null;
         const options = getSelectedOptions(portalCustomField, value || '');
 

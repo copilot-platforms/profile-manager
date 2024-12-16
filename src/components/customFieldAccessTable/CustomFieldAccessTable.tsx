@@ -74,7 +74,7 @@ export const CustomFieldAccessTable = () => {
           <Stack direction="row" justifyContent="space-between" alignItems="center" p="8px 0px" key={key}>
             <Box minWidth="215px">
               <Stack direction="row" alignItems="center" columnGap={2}>
-                {iconsTypeMap[field.type]}
+                {iconsTypeMap[field?.type]}
                 <Typography variant="bodyMd">{field.name}</Typography>
               </Stack>
             </Box>

@@ -46,7 +46,7 @@ export function createMapLookup<T extends Record<string, unknown>>(
 export function getSelectedOptions(portalCustomField: CustomField, value: string | string[]) {
   const options: unknown[] = [];
 
-  if (portalCustomField.type === 'multiSelect' && value && Array.isArray(value) && portalCustomField.options) {
+  if (portalCustomField?.type === 'multiSelect' && value && Array.isArray(value) && portalCustomField.options) {
     portalCustomField.options.forEach((option) => {
       if (value.includes(option.key)) {
         options.push(option);
