@@ -30,7 +30,7 @@ model CustomFieldAccess {
 model ClientProfileUpdates {
   id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   clientId       String   @db.Uuid
-  companyId      String   @db.Uuid
+  companyId      String?  @db.Uuid
   portalId       String
   customFields   Json     @db.JsonB
   changedFields  Json     @db.JsonB
