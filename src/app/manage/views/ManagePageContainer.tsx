@@ -20,7 +20,7 @@ export const ManagePageContainer = ({
   client: any;
   token: string;
   clientId: string;
-  companyId: string;
+  companyId?: string;
   portalId: string;
 }) => {
   const [_customFieldAccess, setCustomFieldAccess] = useState<any>(customFieldAccess);
@@ -86,10 +86,10 @@ export const ManagePageContainer = ({
       method: 'POST',
       body: JSON.stringify({
         token: token,
-        companyId: companyId,
-        clientId: clientId,
-        portalId: portalId,
-        form: form,
+        companyId,
+        clientId,
+        portalId,
+        form,
       }),
     });
 
