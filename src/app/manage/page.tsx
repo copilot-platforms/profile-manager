@@ -1,13 +1,15 @@
-import { Box, Stack, Typography } from '@mui/material';
-import { ManagePageContainer } from './views/ManagePageContainer';
-import { apiUrl } from '@/config';
-import { CustomAccessField, CustomFieldAccessResponse, ModifiedPermissionAccessField } from '@/types/customFieldAccess';
-import { ProfileLinks } from '@/types/settings';
-import { PortalRoutes } from '@/types/copilotPortal';
-import RedirectButton from '@/components/atoms/RedirectButton';
-import { z } from 'zod';
-import { CopilotAPI } from '@/utils/copilotApiUtils';
+import { NoPreviewSupport } from '@/app/NoPreviewSupport';
 import InvalidToken from '@/components/atoms/InvalidToken';
+import RedirectButton from '@/components/atoms/RedirectButton';
+import { apiUrl } from '@/config';
+import { PortalRoutes } from '@/types/copilotPortal';
+import { CustomFieldAccessResponse, ModifiedPermissionAccessField } from '@/types/customFieldAccess';
+import { ProfileLinks } from '@/types/settings';
+import { CopilotAPI } from '@/utils/copilotApiUtils';
+import { getPreviewMode } from '@/utils/previewMode';
+import { Box, Stack, Typography } from '@mui/material';
+import { z } from 'zod';
+import { ManagePageContainer } from './views/ManagePageContainer';
 
 export const revalidate = 0;
 
@@ -59,6 +61,11 @@ export default async function ManagePage({ searchParams }: { searchParams: { tok
   const token = tokenParsed.data;
 
   const copilotClient = new CopilotAPI(token);
+
+  const tokenPayload = await copilotClient.getTokenPayload();
+  if (getPreviewMode(tokenPayload)) {
+    return <NoPreviewSupport />;
+  }
 
   const { id: portalId } = await copilotClient.getWorkspace();
   const { clientId, companyId } = await copilotClient.getClientTokenPayload();
