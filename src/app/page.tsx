@@ -9,6 +9,8 @@ import { ContextUpdate } from '@/hoc/ContextUpdate';
 import { CopilotAPI } from '@/utils/copilotApiUtils';
 import { z } from 'zod';
 import InvalidToken from '@/components/atoms/InvalidToken';
+import { getPreviewMode } from '@/utils/previewMode';
+import { NoPreviewSupport } from './NoPreviewSupport';
 
 export const revalidate = 0;
 
@@ -55,6 +57,12 @@ export default async function Home({ searchParams }: { searchParams: { token: st
 
   const token = tokenParsed.data;
   const copilotClient = new CopilotAPI(token);
+
+  const tokenPayload = await copilotClient.getTokenPayload();
+  if (getPreviewMode(tokenPayload)) {
+    return <NoPreviewSupport />;
+  }
+
   const workspace = await copilotClient.getWorkspace();
   const { id: portalId } = workspace;
 

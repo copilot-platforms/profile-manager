@@ -36,7 +36,7 @@ export class CopilotAPI {
     return WorkspaceResponseSchema.parse(await this.copilot.retrieveWorkspace());
   }
 
-  private async getTokenPayload(): Promise<Token> {
+  async getTokenPayload(): Promise<Token> {
     return TokenSchema.parse(await this.copilot.getTokenPayload?.());
   }
 
