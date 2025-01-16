@@ -43,7 +43,7 @@ export function createMapLookup<T extends Record<string, unknown>>(
   return result;
 }
 
-export function getSelectedOptions(portalCustomField: CustomField, value: string | string[]) {
+export function getSelectedOptions(portalCustomField: CustomField, value: string | string[] | object) {
   const options: unknown[] = [];
 
   if (portalCustomField?.type === 'multiSelect' && value && Array.isArray(value) && portalCustomField.options) {

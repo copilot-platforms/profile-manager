@@ -201,7 +201,7 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
         </Typography>
       )}
       <Typography variant="bodyMd" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        {data?.value}
+        {data?.value.fullAddress ?? data?.value}
       </Typography>
 
       <Popper id={id} open={open} anchorEl={anchorEl}>
@@ -266,6 +266,22 @@ const HistoryList = ({ updateHistory }: { updateHistory: any }) => {
                 </Stack>
               </Stack>
             );
+          }
+          if (typeof history?.value === 'object') {
+            if (history?.value.fullAddress) {
+              return (
+                <Stack key={key} direction="row" alignItems="flex-start" columnGap={3}>
+                  <Typography variant="bodyMd" fontSize={20}>
+                    &#x2022;
+                  </Typography>
+                  <Typography variant="bodySm" key={key}>
+                    {history.value.fullAddress}
+                  </Typography>
+                </Stack>
+              );
+            } else {
+              return <></>;
+            }
           }
           return (
             <Stack key={key} direction="row" alignItems="flex-start" columnGap={3}>

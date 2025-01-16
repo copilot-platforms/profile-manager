@@ -17,7 +17,19 @@ export async function POST(request: NextRequest) {
     //todo: check access
     const copilotClient = new CopilotAPI(clientProfileUpdateRequest.data.token);
     const client: ClientResponse = await copilotClient.getClient(clientProfileUpdateRequest.data.clientId);
+
+    for (const key of Object.keys(clientProfileUpdateRequest.data.form)) {
+      // Yes, this code sucks. No, I don't have an option right now
+      // TODO: Cleanup once we support better fields for address
+      const data = clientProfileUpdateRequest?.data?.form?.[key];
+      const addressableData = data as { fullAddress: string };
+      if (addressableData?.fullAddress) {
+        clientProfileUpdateRequest.data.form[key] = addressableData.fullAddress;
+      }
+    }
+
     const clientUpdateResponse = await copilotClient.updateClient(clientProfileUpdateRequest.data.clientId, {
+      // @ts-expect-error temporary support for address type
       customFields: clientProfileUpdateRequest.data.form,
     });
     // NOTE: If you pass empty string as value to a custom field, that key will be deleted from the copilot api
