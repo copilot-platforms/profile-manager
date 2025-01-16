@@ -60,7 +60,13 @@ export const ClientResponseSchema = z.object({
   companyId: z.string().optional(),
   status: z.string(),
   avatarImageUrl: z.string().nullable(),
-  customFields: z.record(z.string(), z.union([z.string(), z.array(z.string())]).nullable()).nullish(),
+  customFields: z
+    .record(
+      z.string(),
+      // Accomodate new address field
+      z.union([z.string().nullable(), z.array(z.string()).nullable(), z.record(z.string(), z.any()).nullable()]).nullable(),
+    )
+    .nullish(),
 });
 export type ClientResponse = z.infer<typeof ClientResponseSchema>;
 
