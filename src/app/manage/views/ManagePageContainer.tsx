@@ -127,18 +127,25 @@ export const ManagePageContainer = ({
         {allowedCustomField &&
           order(allowedCustomField).map((field: any, key: number) => {
             if (field?.type !== 'multiSelect') {
+              let fieldValue = profileData?.[field.key];
+              if (field?.key === 'address') {
+                fieldValue = profileData?.[field.key]?.fullAddress;
+              }
               return (
                 <InputContainer key={key}>
                   <Typography variant="md">{field.name}</Typography>
                   <ToolTipDecider show={!field.permission.includes('EDIT')}>
                     <StyledTextInput
-                      value={profileData?.[field.key] || ''}
+                      value={fieldValue || ''}
                       variant="outlined"
                       padding="8px 12px"
                       disabled={!field.permission.includes('EDIT')}
                       key={key}
                       onChange={(e) => {
                         setProfileData((prev: any) => {
+                          if (field.key === 'address') {
+                            return { ...prev, [field.key]: { fullAddress: e.target.value } };
+                          }
                           return { ...prev, [field.key]: e.target.value };
                         });
                       }}

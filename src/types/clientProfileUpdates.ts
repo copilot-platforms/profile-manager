@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-export const CustomFieldUpdatesSchema = z.record(z.union([z.string(), z.array(z.string())]).nullable());
+export const AddressCustomFieldSchema = z.record(z.string(), z.any());
+
+export const CustomFieldUpdatesSchema = z.record(
+  z.union([z.string(), z.array(z.string()), AddressCustomFieldSchema]).nullable(),
+);
 export type CustomFieldUpdates = z.infer<typeof CustomFieldUpdatesSchema>;
 
 export const ClientProfileUpdatesRequestSchema = z.object({
