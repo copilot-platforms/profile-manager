@@ -29,6 +29,7 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
       `/api/profile-update-history?token=${token}&clientId=${clientId}&key=${key}&lastUpdated=${lastUpdated}`,
     );
     const data = await res.json();
+    // console.log('data', data);
     setUpdateHistory(data);
     setLoading(false);
   };
@@ -201,7 +202,7 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
         </Typography>
       )}
       <Typography variant="bodyMd" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        {data?.value.fullAddress ?? data?.value}
+        {typeof data?.value === 'object' ? data?.value.fullAddress || '' : data?.value}
       </Typography>
 
       <Popper id={id} open={open} anchorEl={anchorEl}>
@@ -268,7 +269,7 @@ const HistoryList = ({ updateHistory }: { updateHistory: any }) => {
             );
           }
           if (typeof history?.value === 'object') {
-            if (history?.value.fullAddress) {
+            if ('fullAddress' in history?.value) {
               return (
                 <Stack key={key} direction="row" alignItems="flex-start" columnGap={3}>
                   <Typography variant="bodyMd" fontSize={20}>
