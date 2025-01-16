@@ -29,7 +29,6 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
       `/api/profile-update-history?token=${token}&clientId=${clientId}&key=${key}&lastUpdated=${lastUpdated}`,
     );
     const data = await res.json();
-    // console.log('data', data);
     setUpdateHistory(data);
     setLoading(false);
   };
