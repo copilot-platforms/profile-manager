@@ -63,6 +63,12 @@ export async function POST(request: NextRequest) {
       if (areHistoriesEmpty) continue;
 
       if (client.customFields?.[key] !== lastHistory) {
+        const newFullAddress = (client.customFields?.[key] as { fullAddress: string })?.fullAddress;
+        const addressableLastHistory = (lastHistory as { fullAddress: string })?.fullAddress;
+        if (newFullAddress && addressableLastHistory && newFullAddress === addressableLastHistory) {
+          return NextResponse.json({ message: 'No changed fields detected' });
+        }
+
         // If not, fix it.
         await service.save({
           clientId: clientProfileUpdateRequest.data.clientId,
