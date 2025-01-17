@@ -128,8 +128,8 @@ export const ManagePageContainer = ({
           order(allowedCustomField).map((field: any, key: number) => {
             if (field?.type !== 'multiSelect') {
               let fieldValue = profileData?.[field.key];
-              if (field?.key === 'address') {
-                fieldValue = profileData?.[field.key]?.fullAddress;
+              if (field?.type === 'address') {
+                fieldValue = fieldValue.fullAddress;
               }
               return (
                 <InputContainer key={key}>
@@ -143,7 +143,7 @@ export const ManagePageContainer = ({
                       key={key}
                       onChange={(e) => {
                         setProfileData((prev: any) => {
-                          if (field.key === 'address') {
+                          if (field.type === 'address') {
                             return { ...prev, [field.key]: { fullAddress: e.target.value } };
                           }
                           return { ...prev, [field.key]: e.target.value };
