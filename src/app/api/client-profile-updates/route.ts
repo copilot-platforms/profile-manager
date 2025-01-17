@@ -63,6 +63,11 @@ export async function POST(request: NextRequest) {
       if (areHistoriesEmpty) continue;
 
       if (client.customFields?.[key] !== lastHistory) {
+        // @ts-expect-error checking for existance of key
+        if (client.customFields?.[key]?.fullAddress && client.customFields?.[key]?.fullAddress === lastHistory.fullAddress) {
+          return NextResponse.json({ message: 'No changed fields detected' });
+        }
+
         // If not, fix it.
         await service.save({
           clientId: clientProfileUpdateRequest.data.clientId,
