@@ -63,19 +63,32 @@ export async function POST(request: NextRequest) {
       if (areHistoriesEmpty) continue;
 
       if (client.customFields?.[key] !== lastHistory) {
+        // Account for address being object type
+        let isAddressSame = false;
+        const addressableCustomField = client.customFields?.[key] as { fullAddress: string };
+        const addressableLastHistory = lastHistory as { fullAddress: string };
+        if (
+          addressableCustomField?.fullAddress &&
+          addressableLastHistory.fullAddress &&
+          addressableCustomField.fullAddress === addressableLastHistory.fullAddress
+        ) {
+          isAddressSame = true;
+        }
+
         // If not, fix it.
-        await service.save({
-          clientId: clientProfileUpdateRequest.data.clientId,
-          companyId: clientProfileUpdateRequest.data.companyId,
-          portalId: clientProfileUpdateRequest.data.portalId,
-          customFields: { ...(clientUpdateResponse.customFields ?? {}), [key]: client.customFields?.[key] } as Record<
-            string,
-            any
-          >,
-          // @ts-expect-error inject key
-          changedFields: { [key]: client.customFields?.[key] },
-          wasUpdatedByIU: true,
-        });
+        !isAddressSame &&
+          (await service.save({
+            clientId: clientProfileUpdateRequest.data.clientId,
+            companyId: clientProfileUpdateRequest.data.companyId,
+            portalId: clientProfileUpdateRequest.data.portalId,
+            customFields: { ...(clientUpdateResponse.customFields ?? {}), [key]: client.customFields?.[key] } as Record<
+              string,
+              any
+            >,
+            // @ts-expect-error inject key
+            changedFields: { [key]: client.customFields?.[key] },
+            wasUpdatedByIU: true,
+          }));
       }
     }
     await service.save({
