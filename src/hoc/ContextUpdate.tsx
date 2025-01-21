@@ -22,7 +22,10 @@ export const ContextUpdate = ({ children, access, settings, token, portalId, wor
     `api/client-profile-updates?token=${token}&portalId=${portalId}`,
     fetcher,
     {
+      // Don't sent requests if tab is inactive
       refreshInterval: 10000,
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
     },
   );
 
