@@ -52,7 +52,7 @@ async function getClient(clientId: string, token: string) {
   return data;
 }
 
-export default async function ManagePage({ searchParams }: { searchParams: { token: string; portalId: string } }) {
+export default async function ManagePage({ searchParams }: { searchParams: { token: string } }) {
   const tokenParsed = z.string().safeParse(searchParams.token);
   if (!tokenParsed.success) {
     return <InvalidToken />;
