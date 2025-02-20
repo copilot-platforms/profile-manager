@@ -48,7 +48,7 @@ async function getSettings({ token, portalId }: { token: string; portalId: strin
   return data;
 }
 
-export default async function Home({ searchParams }: { searchParams: { token: string; portalId: string } }) {
+export default async function Home({ searchParams }: { searchParams: { token: string } }) {
   const tokenParsed = z.string().safeParse(searchParams.token);
 
   if (!tokenParsed.success) {
