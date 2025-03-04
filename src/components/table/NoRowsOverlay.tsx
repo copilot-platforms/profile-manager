@@ -28,7 +28,7 @@ const NoRowsOverlay = () => (
       </Typography>
       <Box textAlign={'left'}>
         <Link
-          href="https://www.copilot.com/guide/profile-manager-app"
+          href="https://www.copilot.app/guide/profile-manager-app"
           style={{ lineHeight: '3.75em', textDecoration: 'none', textAlign: 'left' }}
           target="_blank"
         >
