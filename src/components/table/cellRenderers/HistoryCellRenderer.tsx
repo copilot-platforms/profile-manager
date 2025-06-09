@@ -4,7 +4,13 @@ import { FiberManualRecord } from '@mui/icons-material';
 import { Box, CircularProgress, Popper, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
-export const HistoryCellRenderer = ({ value, tableRef }: { value: { row: any; key: string }; tableRef: any }) => {
+export const HistoryCellRenderer = ({
+  value,
+  tableRef,
+}: {
+  value: { row: any; key: string };
+  tableRef: React.RefObject<HTMLDivElement>;
+}) => {
   const appState = useAppState();
   const [loading, setLoading] = useState(false);
 
