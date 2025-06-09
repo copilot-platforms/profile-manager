@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css'; // Core CSS
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Theme
 import './table.css';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ClientCellRenderer } from './cellRenderers/ClientCellRenderer';
 import { CompanyCellRenderer } from './cellRenderers/CompanyCellRenderer';
 import { HistoryCellRenderer } from './cellRenderers/HistoryCellRenderer';
@@ -57,7 +57,7 @@ export const TableCore = () => {
       return stringA.localeCompare(stringB);
     }
   };
-
+  const tableRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setRowData(appState?.clientProfileUpdates);
 
@@ -177,6 +177,9 @@ export const TableCore = () => {
                 key: el,
               };
             },
+            cellRendererParams: {
+              tableRef: tableRef,
+            },
           },
         ];
       });
@@ -194,6 +197,7 @@ export const TableCore = () => {
   return (
     <Box
       className="ag-theme-quartz"
+      ref={tableRef}
       sx={{
         height:
           arraysHaveSameElements(appState?.mutableSettings, appState?.settings) &&

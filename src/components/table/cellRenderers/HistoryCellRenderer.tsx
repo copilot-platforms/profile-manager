@@ -4,9 +4,8 @@ import { FiberManualRecord } from '@mui/icons-material';
 import { Box, CircularProgress, Popper, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
-export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string } }) => {
+export const HistoryCellRenderer = ({ value, tableRef }: { value: { row: any; key: string }; tableRef: any }) => {
   const appState = useAppState();
-
   const [loading, setLoading] = useState(false);
 
   const [updateHistory, setUpdateHistory] = useState<any>([]);
@@ -132,10 +131,34 @@ export const HistoryCellRenderer = ({ value }: { value: { row: any; key: string 
         ) : (
           <></>
         )}
-        <Popper id={id} open={open} anchorEl={anchorEl}>
+        <Popper
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          modifiers={[
+            {
+              name: 'preventOverflow',
+              options: {
+                boundary: tableRef.current,
+              },
+            },
+          ]}
+        >
           {loading ? <CircularProgress size={20} color="inherit" /> : <HistoryList updateHistory={updateHistory} />}
         </Popper>
-        <Popper id={multiSelectAnchorId} open={multiSelectAnchorOpen} anchorEl={multiSelectAnchor}>
+        <Popper
+          id={multiSelectAnchorId}
+          open={multiSelectAnchorOpen}
+          anchorEl={multiSelectAnchor}
+          modifiers={[
+            {
+              name: 'preventOverflow',
+              options: {
+                boundary: tableRef.current,
+              },
+            },
+          ]}
+        >
           <Stack
             direction="row"
             sx={(theme) => ({
