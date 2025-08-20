@@ -34,6 +34,15 @@ export type MeResponse = z.infer<typeof MeResponseSchema>;
 export const WorkspaceResponseSchema = z.object({
   id: z.string(),
   isCompaniesEnabled: z.boolean().optional(),
+  label: z
+    .object({
+      individualTerm: z.string().optional(),
+      individualTermPlural: z.string().optional(),
+      groupTerm: z.string().optional(),
+      groupTermPlural: z.string().optional(),
+    })
+    .optional(),
+
   // For future use
   // industry: z.string().optional(),
   // isClientDirectSignUpEnabled: z.boolean().optional(),

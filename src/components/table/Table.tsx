@@ -14,10 +14,10 @@ import { order } from '@/utils/orderable';
 import copilotTheme from '@/utils/copilotTheme';
 import NoRowsOverlay from './NoRowsOverlay';
 import Loading from '@/app/loading';
+import { getWorkspaceLabels } from '@/utils/getWorkspaceLabels';
 
 export const TableCore = () => {
   const appState = useAppState();
-
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState<any>([]);
   //
@@ -80,7 +80,7 @@ export const TableCore = () => {
           colDefs = [
             ...colDefs,
             {
-              field: 'client',
+              field: getWorkspaceLabels(appState?.workspace).individualTerm,
               cellRenderer: ClientCellRenderer,
               flex: 1,
               comparator: comparatorTypeI,
@@ -110,7 +110,7 @@ export const TableCore = () => {
           colDefs = [
             ...colDefs,
             {
-              field: 'company',
+              field: getWorkspaceLabels(appState?.workspace).groupTerm,
               cellRenderer: CompanyCellRenderer,
               flex: 1,
               comparator: comparatorTypeI,
