@@ -34,7 +34,7 @@ export type MeResponse = z.infer<typeof MeResponseSchema>;
 export const WorkspaceResponseSchema = z.object({
   id: z.string(),
   isCompaniesEnabled: z.boolean().optional(),
-  label: z
+  labels: z
     .object({
       individualTerm: z.string().optional(),
       individualTermPlural: z.string().optional(),
