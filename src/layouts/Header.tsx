@@ -1,6 +1,7 @@
 import SearchBar from '@/components/searchBar/SearchBar';
 import { Toggle } from '@/components/toggle/Toggle';
 import { useAppState } from '@/hooks/useAppState';
+import { getWorkspaceLabels } from '@/utils/getWorkspaceLabels';
 import { Stack, Typography } from '@mui/material';
 
 export const Header = () => {
@@ -17,7 +18,7 @@ export const Header = () => {
       })}
     >
       <Typography variant="lg" fontSize="13px" sx={{ overflow: 'hidden', textWrap: 'nowrap', textOverflow: 'ellipsis' }}>
-        Client profile updates
+        {getWorkspaceLabels(appState?.workspace, true).individualTerm} profile updates
       </Typography>
       <Stack direction="row" columnGap={4} alignItems="center">
         <SearchBar
